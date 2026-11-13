@@ -24,7 +24,7 @@ has "$h" "connect-src 'self';" && ok "CSP لا تسمح بالاتصال بأي 
 has "$h" 'x-content-type-options: nosniff' && ok "nosniff" || bad "nosniff" "مفقود"
 has "$h" 'cache-control: no-cache' && ok "الصفحة لا تُخزَّن قديمة" || bad "Cache-Control للصفحة" "$(grep -i cache-control <<<"$h")"
 
-for f in /js/app.js /js/brief.js /js/readers.js /vendor/fflate.js; do
+for f in /js/app.js /js/brief.js /js/readers.js /js/show.js /vendor/fflate.js /vendor/gsap.min.js; do
   a=$(hdr "$f")
   has "$a" '^HTTP/[0-9.]* 200' && has "$a" 'content-type: \(application\|text\)/javascript' && ok "$f" || bad "$f" "$(code "$a") $(grep -i content-type <<<"$a")"
 done

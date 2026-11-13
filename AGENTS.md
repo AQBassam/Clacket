@@ -8,8 +8,8 @@ Live at clacket.bassamailab.xyz.
 ## Rules
 - No server, no build step, no framework, no CDN, no analytics, no network
   calls after page load. The uploaded file never leaves the browser.
-- Vanilla JS in classic scripts. Only vendor/ holds third-party code (fflate,
-  pdf.js legacy build), each with its licence. Record any version change in
+- Vanilla JS in classic scripts. Only vendor/ holds third-party code (GSAP core,
+  fflate, pdf.js legacy build), each with its licence. Record any version change in
   README.
 - UI text is Arabic, plain, for non-technical presenters. Western digits.
   Tajawal, self-hosted. Colours follow the lab: see :root in css/style.css.
@@ -21,6 +21,16 @@ Live at clacket.bassamailab.xyz.
 - The guide's install steps come from Claude's official docs; re-verify them
   before editing, and update the date shown in the guide.
 - Do not commit real presentations. Tests take a file path.
+
+## The live show (js/show.js)
+The hero is a miniature show the visitor drives. It is the page's one loud
+element; keep everything else quiet. It must obey the brief it advertises: one
+paused master timeline, only .to() and .set(), the point cloud drawn from the
+state object S, Arabic split by whole words, Back in reverse at twice the
+speed, letter keys matched by physical key. Every claim on its slides must be
+true of the brief. tests/smoke.py checks click-through, Back and jump give the
+same picture on every beat. Class names inside the stage must not collide with
+page classes (a `.num` collision once broke the counter).
 
 ## How the reader works (js/readers.js)
 - pptx: unzip with fflate, order slides by presentation.xml, join the runs of

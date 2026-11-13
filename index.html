@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>كلاكيت: حوّل عرضك إلى عرض سينمائي</title>
 <meta name="description" content="كلاكيت يكتب لك مطالبة جاهزة تلصقها في وكيل برمجة، فيبني لك عرضًا تقديميًا سينمائيًا يعمل بجهاز التقليب. ملفك لا يغادر جهازك.">
-<meta name="theme-color" content="#f7f7f2">
+<meta name="theme-color" content="#0c2624">
 <meta property="og:title" content="كلاكيت: حوّل عرضك إلى عرض سينمائي">
 <meta property="og:description" content="أجب عن أسئلة قصيرة أو ارفع عرضك، وخذ مطالبة جاهزة لوكيل البرمجة.">
 <meta property="og:locale" content="ar_OM">
@@ -30,10 +30,68 @@
 </header>
 
 <main>
-  <section class="hero wrap">
-    <p class="kicker">من BassamAI Lab</p>
-    <h1>عرضك القادم <span class="hl">فيلمٌ</span> لا شرائح</h1>
-    <p class="lead">أجب عن أسئلة قصيرة أو ارفع عرضك الحالي. كلاكيت يكتب لك مطالبة جاهزة تلصقها في وكيل برمجة، فيبني لك عرضًا سينمائيًا تقوده بجهاز التقليب.</p>
+  <section class="theatre" aria-labelledby="show-h">
+    <div class="theatre-in">
+      <div class="arm" aria-hidden="true"></div>
+      <div id="stage" class="stage" tabindex="0" role="group" aria-roledescription="عرض تقديمي" aria-label="عرض حيّ مصغّر. اضغط السهم الأيمن للتالي والأيسر للسابق.">
+        <canvas class="cloud" aria-hidden="true"></canvas>
+
+        <div class="scene" data-say="عرضك القادم فيلم، لا شرائح.">
+          <h1 id="show-h" data-in="start-title" data-words>عرضك القادم فيلم، لا شرائح</h1>
+          <p class="line" data-in="start-line" data-words>كلاكيت يكتب المطالبة، ووكيل البرمجة يبني العرض.</p>
+          <p class="cue" data-in="start-hint">اضغط هنا لتبدأ العرض</p>
+        </div>
+
+        <div class="scene" data-say="في كل نقرة فكرة واحدة. وما ستقوله يبقى في ملاحظاتك، لا على الشاشة.">
+          <p class="kick" data-in="idea-kicker">قاعدة العرض</p>
+          <p class="head" data-in="idea-title" data-words>في كل نقرة <em>فكرة واحدة</em></p>
+          <p class="line" data-in="idea-notes" data-words>وما ستقوله يبقى في ملاحظاتك، لا على الشاشة.</p>
+        </div>
+
+        <div class="scene" data-say="4 بوابات يتوقف عندها الوكيل لتجرّب بنفسك قبل أن يكمل.">
+          <p class="bignum" data-in="gates-num"><span class="count">0</span></p>
+          <p class="line big" data-in="gates-label" data-words>بوابات يتوقف عندها الوكيل لتجرّب بنفسك قبل أن يكمل</p>
+        </div>
+
+        <div class="scene" data-say="خلفية حيّة تتشكّل بحسب موضوعك، ولا تنقطع بين صفحة وأخرى.">
+          <p class="head" data-in="live-title" data-words>خلفية حيّة تتشكّل بحسب موضوعك</p>
+          <p class="line" data-in="live-line" data-words>ولا تنقطع بين صفحة وأخرى.</p>
+        </div>
+
+        <div class="scene" data-say="وأنت من يقود: السهم الأيمن للتالي، الأيسر للسابق، B للشاشة السوداء، F لملء الشاشة.">
+          <p class="head" data-in="drive-title" data-words>وأنت من يقود</p>
+          <ul class="keys" data-in="drive-keys" data-words>
+            <li><kbd dir="ltr">→</kbd> التالي</li>
+            <li><kbd dir="ltr">←</kbd> السابق</li>
+            <li><kbd dir="ltr">B</kbd> شاشة سوداء</li>
+            <li><kbd dir="ltr">F</kbd> ملء الشاشة</li>
+          </ul>
+        </div>
+
+        <div class="scene" data-say="الآن دور عرضك. أجب عن أسئلة قصيرة في الأسفل، وخذ مطالبتك.">
+          <p class="head" data-in="yours-title" data-words>الآن دور عرضك</p>
+          <p class="line" data-in="yours-line" data-words>أجب عن أسئلة قصيرة في الأسفل، وخذ مطالبتك.</p>
+        </div>
+
+        <div class="pageno" aria-hidden="true"><b></b><i></i></div>
+        <div class="progress" aria-hidden="true"><i></i></div>
+        <div class="cover" aria-hidden="true"></div>
+      </div>
+
+      <div class="deck-bar">
+        <p class="deck-note">هذا عرض حيّ مصغّر، مبنيّ بقواعد المطالبة نفسها. انقر عليه ثم قُده بالأسهم، أو باللمس.</p>
+        <div class="deck-btns">
+          <button type="button" class="dbtn" id="show-prev">السابق</button>
+          <button type="button" class="dbtn main" id="show-next">التالي</button>
+          <button type="button" class="dbtn" id="show-full">ملء الشاشة</button>
+        </div>
+      </div>
+      <p id="stage-live" class="sr" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <section class="wrap intro">
+    <p class="lead">أجب عن أسئلة قصيرة أو ارفع عرضك الحالي. كلاكيت يكتب لك مطالبة جاهزة تلصقها في وكيل برمجة، فيبني لك عرضًا كاملًا بهذه الطريقة، ومعه نافذة للمقدّم وملف PDF ونسخة احتياطية.</p>
     <ul class="facts">
       <li><strong>الناتج صفحة ويب</strong> تعمل دون إنترنت، وليس ملف PowerPoint.</li>
       <li><strong>تحتاج وكيل برمجة</strong> باشتراك مدفوع، مثل Claude. <a href="#guide">الدليل يشرح البداية</a>.</li>
@@ -43,8 +101,6 @@
 
   <section id="maker" class="wrap maker" aria-labelledby="maker-h">
     <h2 id="maker-h" class="sr">مولّد المطالبة</h2>
-    <div class="slate" aria-hidden="true"></div>
-
     <ol class="steps" id="steps">
       <li data-go="1" class="on"><span>1</span>العرض</li>
       <li data-go="2"><span>2</span>المكان</li>
@@ -225,7 +281,6 @@
   </section>
 
   <section id="guide" class="wrap guide" aria-labelledby="guide-h">
-    <p class="kicker">الدليل</p>
     <h2 id="guide-h">من المطالبة إلى العرض</h2>
     <p class="lead">وكيل البرمجة برنامج ذكاء اصطناعي يعمل على حاسوبك: ينشئ الملفات ويشغّل الأوامر داخل مجلد تختاره. هذا الدليل يشرح البداية بتطبيق Claude لسطح المكتب، وهو الوكيل الذي اختُبرت عليه المطالبة.</p>
 
@@ -327,9 +382,11 @@
   </symbol>
 </svg>
 
+<script src="vendor/gsap.min.js"></script>
 <script src="vendor/fflate.js"></script>
 <script src="js/brief.js"></script>
 <script src="js/readers.js"></script>
 <script src="js/app.js"></script>
+<script src="js/show.js"></script>
 </body>
 </html>

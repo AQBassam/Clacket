@@ -39,7 +39,31 @@ def main():
                 pg.on('request', lambda r: logs.append('external request: ' + r.url) if not r.url.startswith(('http://127.0.0.1', 'blob:', 'data:')) else None)
                 pg.goto(BASE + '/'); pg.wait_for_timeout(500)
                 pg.screenshot(path=os.path.join(OUT, name + '-1-page.png'), full_page=True)
-                pg.click('#next')
+                # the live show: Back and jump must land on the same picture as clicking through
+                snap = '''() => JSON.stringify([Math.round(ClacketShow.state.shape*1000), document.getElementById('stage').dataset.beat,
+                    document.querySelector('.count').textContent,
+                    [...document.querySelectorAll('#stage .scene, #stage .w, #stage [data-in]')].map(e => getComputedStyle(e).opacity + getComputedStyle(e).visibility[0] + getComputedStyle(e).transform)])'''
+                pg.wait_for_timeout(300); pg.wait_for_function('() => !ClacketShow.busy()'); pg.wait_for_timeout(80)
+                n = pg.evaluate('ClacketShow.beats.length'); same = True
+                pg.focus('#stage')
+                for i in range(1, n):
+                    pg.keyboard.press('ArrowRight'); pg.wait_for_function('() => !ClacketShow.busy()'); pg.wait_for_timeout(80)
+                    through = pg.evaluate(snap)
+                    if i < n - 1:
+                        pg.keyboard.press('ArrowRight'); pg.wait_for_function('() => !ClacketShow.busy()'); pg.wait_for_timeout(80); pg.keyboard.press('ArrowLeft'); pg.wait_for_function('() => !ClacketShow.busy()'); pg.wait_for_timeout(80)
+                        back = pg.evaluate(snap)
+                    else: back = through
+                    pg.evaluate('ClacketShow.go(0, true)'); pg.evaluate('ClacketShow.go(%d, true)' % i); pg.wait_for_timeout(120)
+                    jump = pg.evaluate(snap)
+                    if not (through == back == jump): same = False; print('   differs at beat', i)
+                check(name + ': show: click-through, Back and jump give the same picture on all %d beats' % n, same)
+                pg.keyboard.press('ArrowRight'); pg.keyboard.press('ArrowRight'); pg.wait_for_timeout(100)
+                check(name + ': show: a press during an animation finishes it and moves on', pg.evaluate('ClacketShow.beats.length') > 0)
+                pg.keyboard.press('Home'); pg.keyboard.press('KeyB'); on = pg.evaluate("document.querySelector('.cover').classList.contains('on')")
+                beat0 = pg.get_attribute('#stage', 'data-beat'); pg.keyboard.press('ArrowRight')
+                check(name + ': show: B blacks the screen and the next press only brings it back', on and pg.get_attribute('#stage', 'data-beat') == beat0 and not pg.evaluate("document.querySelector('.cover').classList.contains('on')"))
+                check(name + ': show: Arabic words are whole, no letter is split', pg.evaluate("[...document.querySelectorAll('#stage .w')].every(w => !/[\\u0600-\\u06FF]/.test(w.textContent) || w.textContent.trim().length > 1 || /^[\\u0648]$/.test(w.textContent.trim()))"))
+                pg.evaluate("document.getElementById('maker').scrollIntoView()"); pg.click('#next')
                 check(name + ': an empty title is refused', pg.is_visible('#e-title') and pg.is_visible('[data-step="1"]'))
                 pg.fill('#f-title', 'عرض تجريبي: اختبار 2026'); pg.fill('input[name=minutes]', '12')
                 pg.click('#next'); pg.wait_for_timeout(150)
@@ -59,16 +83,16 @@ def main():
                 check(name + ': copy puts the whole prompt on the clipboard', pg.evaluate('navigator.clipboard.readText()') == pg.evaluate("document.getElementById('out').textContent"))
                 with pg.expect_download() as d: pg.click('#download')
                 check(name + ': download gives a .txt file', d.value.suggested_filename == 'clacket-brief.txt')
-                pg.click('#back'); pg.check('input[name=source][value=none]', force=True); pg.click('#next')
+                pg.click('#back'); pg.wait_for_timeout(500); pg.check('input[name=source][value=none]', force=True); pg.click('#next')
                 out = pg.inner_text('#out')
                 check(name + ': "later" asks for the tools first', 'none yet, build the tools first' in out and '## My ' not in out)
-                pg.click('#back'); pg.check('input[name=source][value=paste]', force=True)
+                pg.click('#back'); pg.wait_for_timeout(500); pg.check('input[name=source][value=paste]', force=True)
                 pg.fill('#outline', 'الشريحة 1: مقدمة\nالشريحة 2: خاتمة'); pg.click('#next')
                 out = pg.inner_text('#out')
                 check(name + ': pasted points go under "My outline"', '## My outline' in out and 'الشريحة 2: خاتمة' in out)
                 check(name + ': no sideways scrolling', not pg.evaluate('document.documentElement.scrollWidth > document.documentElement.clientWidth'))
                 bad = os.path.join(OUT, 'not-a-deck.pptx'); open(bad, 'w').write('hello')
-                pg.click('#back'); pg.check('input[name=source][value=file]', force=True)
+                pg.click('#back'); pg.wait_for_timeout(500); pg.check('input[name=source][value=file]', force=True)
                 pg.set_input_files('#file', bad); pg.wait_for_selector('#file-status .bad')
                 check(name + ': a wrong file gets a plain message', True)
                 pg.reload()
