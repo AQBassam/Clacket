@@ -45,10 +45,15 @@ def main():
                     [...document.querySelectorAll('#stage .scene, #stage .w, #stage [data-in]')].map(e => getComputedStyle(e).opacity + getComputedStyle(e).visibility[0] + getComputedStyle(e).transform)])'''
                 pg.wait_for_timeout(300); pg.wait_for_function('() => !ClacketShow.busy()'); pg.wait_for_timeout(80)
                 n = pg.evaluate('ClacketShow.beats.length'); same = True
+                leak_js = '''(i) => Object.keys(ClacketShow.owner).filter(k => ClacketShow.owner[k] > i &&
+                    ClacketShow.parts[k].some(e => parseFloat(getComputedStyle(e).opacity) > 0.001 && getComputedStyle(e).visibility !== 'hidden' &&
+                        e.closest('.scene') && getComputedStyle(e.closest('.scene')).visibility !== 'hidden'))'''
+                leaks = pg.evaluate(leak_js, 0)
                 pg.focus('#stage')
                 for i in range(1, n):
                     pg.keyboard.press('ArrowRight'); pg.wait_for_function('() => !ClacketShow.busy()'); pg.wait_for_timeout(80)
                     through = pg.evaluate(snap)
+                    leaks += [str(i) + ':' + k for k in pg.evaluate(leak_js, i)]
                     if i < n - 1:
                         pg.keyboard.press('ArrowRight'); pg.wait_for_function('() => !ClacketShow.busy()'); pg.wait_for_timeout(80); pg.keyboard.press('ArrowLeft'); pg.wait_for_function('() => !ClacketShow.busy()'); pg.wait_for_timeout(80)
                         back = pg.evaluate(snap)
@@ -57,6 +62,7 @@ def main():
                     jump = pg.evaluate(snap)
                     if not (through == back == jump): same = False; print('   differs at beat', i)
                 check(name + ': show: click-through, Back and jump give the same picture on all %d beats' % n, same)
+                check(name + ': show: nothing from a later click is visible at an earlier one', not leaks, leaks)
                 pg.keyboard.press('ArrowRight'); pg.keyboard.press('ArrowRight'); pg.wait_for_timeout(100)
                 check(name + ': show: a press during an animation finishes it and moves on', pg.evaluate('ClacketShow.beats.length') > 0)
                 pg.keyboard.press('Home'); pg.keyboard.press('KeyB'); on = pg.evaluate("document.querySelector('.cover').classList.contains('on')")

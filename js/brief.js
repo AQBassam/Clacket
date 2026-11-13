@@ -3,7 +3,7 @@
    "About my talk" block from the form, then appends BODY unchanged.
    To update the prompt: edit BODY, raise VERSION, add a line to docs/BRIEF-CHANGELOG.md. */
 window.CLACKET_BRIEF = {
-  VERSION: '2.2',
+  VERSION: '2.3',
   DATE: '2026-11-13',
   TITLE: '# Build me a cinematic, clicker-driven web presentation',
   BODY: String.raw`## 1. What I want
@@ -130,6 +130,12 @@ nudge it.
     attaches its own bookkeeping to objects it tweens, so never serialise or
     blindly copy a state object.
   - Each scene hides its own elements when it ends.
+  - Each click owns its content. Place a click's animation at or after the time
+    of the beat before it. Never position it relative to the last tween you
+    added: that tween can end before a longer one running beside it, and the
+    next click's content then starts early and shows in the earlier picture.
+    At rest on any beat, nothing that belongs to a later click is visible, not
+    even partly.
 - Authoring: js/deck.js builds the show with a small API: start a scene, mark a
   beat with its name, add animation between beats. Extra scene files
   (js/scenes-*.js) can add pages at named points, so the show grows without one
@@ -231,6 +237,17 @@ Look:
   empty on every page.
 - Charts are SVG so they animate: lines draw, bars grow, numbers count. Label
   axes and show the source.
+- Pictures. A show with no pictures is not cinematic. Use the images I supply.
+  Where I supply none, say in Phase 0 which pages need a picture and what it
+  should show, and offer me two routes: I send it, or you fetch one under a
+  free licence. Download every picture into assets/; never link to one on the
+  web. Record its source, author and licence in docs/sources.md, and show a
+  small credit on the slide when the licence asks for it. No picture of a
+  real, identifiable person unless I supply it. Treat a picture as a scene, not
+  decoration: full-bleed or filling the visual column, with a slow camera move
+  (a push or a drift) driven by the timeline. Text over a picture sits on a
+  scrim that keeps the 7:1 contrast. Keep pictures at most 2560 px wide, as
+  JPEG or WebP. Show them as ordinary images or on a 2D canvas (section 4).
 - Animate transforms and opacity. A faint grain and vignette are welcome in the
   live show if they cost almost nothing. Leave grain out of every export: noise
   does not compress and multiplies file sizes.
@@ -359,6 +376,9 @@ Add other files when you need them and list them in the README.
   identically wrong. Look at the pictures yourself: every beat, frames from the
   middle of each animation, each theme, and the small embedded copy in the
   presenter view.
+- On every beat, check by script that every element belonging to a later click
+  is fully hidden. The three-capture check cannot see this fault: all three
+  captures show the same early text.
 - If the deck has Arabic: capture every text effect mid-animation and confirm
   the letters stay joined and no text uses a fallback font.
 - Confirm beat names are unique and every beat has text and notes.

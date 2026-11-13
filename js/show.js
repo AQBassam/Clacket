@@ -86,13 +86,24 @@
     parts.push({ w: 0.8, f: seg(0.5, 0.28, 0.5, 0.78, 0.008) });
     return fill(parts);
   }
-  function arrow() {
+  /* a presentation clicker held upright: a rounded body, two buttons, a beam */
+  function clicker() {
+    var body = function (a, b) {
+      var x = 0.38 + a * 0.24, y = 0.36 + b * 0.52;
+      var dx = Math.max(0.46 - x, x - 0.54, 0), dyTop = Math.max(0.44 - y, 0), dyBot = Math.max(y - 0.80, 0);
+      var d = Math.sqrt(dx * dx + (dyTop + dyBot) * (dyTop + dyBot));
+      return d > 0.08 ? [0.5 + (x - 0.5) * 0.6, y] : [x, y];
+    };
     return fill([
-      { w: 4, f: rect(0.12, 0.44, 0.48, 0.16) },
-      { w: 4, f: function (a, b) { var u = Math.sqrt(a); return [0.9 - u * 0.32, 0.52 + (b - 0.5) * u * 0.52]; } }
+      { w: 5, f: body },
+      { w: 1.1, f: ring(0.5, 0.5, 0.055, 0.006, 0, 6.2832) },
+      { w: 0.9, f: ring(0.5, 0.66, 0.04, 0.006, 0, 6.2832) },
+      { w: 0.5, f: seg(0.5, 0.33, 0.5, 0.2, 0.004) },
+      { w: 0.5, f: ring(0.5, 0.34, 0.13, 0.006, 3.6, 5.82) },
+      { w: 0.6, f: ring(0.5, 0.34, 0.21, 0.006, 3.6, 5.82) }
     ]);
   }
-  var SHAPES = [clapper(), spot(), gates(), network(), book(), arrow(), clapper()];
+  var SHAPES = [clapper(), spot(), gates(), network(), book(), clicker(), clapper()];
   /* Per-point timing, so dots leave at their own moment and swirl in flight. */
   var delay = [], swirl = [], size = [];
   for (var i = 0; i < N; i++) { delay.push(rnd() * 0.45); swirl.push((rnd() - 0.5) * 0.22); size.push(0.6 + rnd() * 0.9); }
@@ -175,10 +186,16 @@
   });
   setCount();
 
-  function beat(name, page, click, clicks) { beats.push({ name: name, time: tl.duration(), page: page, click: click, clicks: clicks }); }
+  /* A beat is the END of everything added so far. Whatever a later click shows
+     must be placed at or after that time. Placing it with '>' (the end of the
+     most recently added tween) is a trap: that tween can end before a longer
+     one, and the later click's content then leaks into the earlier picture. */
+  var owner = {};                             /* part key -> index of the beat that first shows it */
+  function beat(name, page, click, clicks) { tl.addLabel('beat-' + name, tl.duration()); beats.push({ name: name, time: tl.duration(), page: page, click: click, clicks: clicks }); }
+  function afterBeat() { return tl.duration(); }
   function sceneIn(n, at) { tl.set(scenes[n], { autoAlpha: 1 }, at); }
   function sceneOut(n) { tl.to(scenes[n], { autoAlpha: 0, duration: 0.35 * D, ease: 'power1.in' }); }
-  function bring(key, at, stagger) { tl.to(parts[key], { autoAlpha: 1, x: 0, duration: 0.5 * D, ease: 'power2.out', stagger: (stagger == null ? 0.07 : stagger) * D }, at); }
+  function bring(key, at, stagger) { owner[key] = beats.length; tl.to(parts[key], { autoAlpha: 1, x: 0, duration: 0.5 * D, ease: 'power2.out', stagger: (stagger == null ? 0.07 : stagger) * D }, at); }
   function morph(to, at, dur) { tl.to(S, { shape: to, duration: (dur || 1.5) * D, ease: 'none' }, at); }
 
   /* page 0: the start screen */
@@ -191,7 +208,7 @@
   sceneOut(0); tl.addLabel('p1'); sceneIn(1, 'p1'); morph(1, 'p1');
   bring('idea-kicker', 'p1+=' + 0.3 * D); bring('idea-title', '>-0.2');
   beat('one-idea', 1, 0, 2);
-  bring('idea-notes', '>');
+  bring('idea-notes', afterBeat());
   beat('one-idea-notes', 1, 1, 2);
 
   /* page 2: a number that counts */
@@ -294,5 +311,5 @@
     mover = gsap.to(tl, { time: beats[0].time, duration: beats[0].time, ease: 'none', onComplete: function () { mover = null; } });
   });
 
-  window.ClacketShow = { beats: beats, go: go, next: next, prev: prev, timeline: tl, state: S, busy: function () { return !!mover; } };
+  window.ClacketShow = { owner: owner, parts: parts, beats: beats, go: go, next: next, prev: prev, timeline: tl, state: S, busy: function () { return !!mover; } };
 })();

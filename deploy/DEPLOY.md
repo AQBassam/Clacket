@@ -29,7 +29,7 @@ GitHub يصنع أرشيف الوسم تلقائيًا، فلا حاجة إلى 
 ## التثبيت على الخادم
 
 ```bash
-V=1.1.0
+V=1.1.1
 cd /root
 curl -fL -o clacket-$V.tar.gz https://github.com/AQBassam/Clacket/archive/refs/tags/v$V.tar.gz
 tar -xzf clacket-$V.tar.gz && cd Clacket-$V
