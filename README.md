@@ -21,6 +21,8 @@ js/app.js           المعالج وبناء المطالبة
 vendor/             fflate لفك الضغط، و pdf.js لقراءة PDF، مع رخصتيهما
 assets/fonts/       خط Tajawal مع رخصته
 tests/smoke.py      اختبار آلي في متصفح مخفي
+deploy/             سكربتات النشر وإعداد nginx
+version.json        رقم إصدار الموقع ونسخة المطالبة
 docs/               سجل نسخ المطالبة، وما اختُبر وما لم يُختبر
 ```
 
@@ -48,17 +50,11 @@ python3 tests/smoke.py /path/to/deck.pptx
 
 ## النشر
 
-انسخ محتويات المستودع إلى جذر الموقع على الخادم، ووجّه النطاق `clacket.bassamailab.xyz` إليه مع شهادة SSL. لا متغيرات بيئة ولا قاعدة بيانات.
-
-يجب أن يخدّم الخادم ملفات `.mjs` بنوع `text/javascript`، وإلا لن تعمل قراءة PDF. في nginx:
-
-```nginx
-types { text/javascript mjs; }
-```
+الخطوات الكاملة في [`deploy/DEPLOY.md`](deploy/DEPLOY.md): nginx على الخادم، وإصدارات بوسوم GitHub، وتحقق من البصمات، وتراجع في ثانية.
 
 ## تحديث المطالبة
 
-عدّل `BODY` في `js/brief.js`، وارفع `VERSION`، وأضف سطرًا في `docs/BRIEF-CHANGELOG.md`.
+عدّل `BODY` في `js/brief.js`، وارفع `VERSION` فيه و`brief` في `version.json`، وأضف سطرًا في `docs/BRIEF-CHANGELOG.md`، ثم انشر إصدارًا جديدًا.
 
 ## الخصوصية
 

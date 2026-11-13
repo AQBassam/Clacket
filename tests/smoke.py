@@ -1,6 +1,7 @@
 """Clacket smoke test. Usage: python3 tests/smoke.py /path/to/deck.pptx [chrome-path]
 Serves the repo locally, drives a hidden Chrome, writes screenshots to tests/out/.
-Needs: pip install playwright. Exits 1 on any failure."""
+Needs: pip install playwright. Exits 1 on any failure.
+Set CLACKET_URL=http://host to test a running server instead of a local copy."""
 import json, os, subprocess, sys, time
 from playwright.sync_api import sync_playwright
 
@@ -9,6 +10,7 @@ OUT = os.path.join(ROOT, 'tests', 'out')
 DECK = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else None
 CHROME = sys.argv[2] if len(sys.argv) > 2 else None
 PORT = '8765'
+BASE = os.environ.get('CLACKET_URL', 'http://127.0.0.1:' + PORT)
 fails, logs = [], []
 
 def check(name, ok, detail=''):
@@ -19,7 +21,7 @@ def main():
     if not DECK or not os.path.exists(DECK):
         sys.exit('Give the path of a .pptx file to test with.')
     os.makedirs(OUT, exist_ok=True)
-    srv = subprocess.Popen([sys.executable, '-m', 'http.server', PORT, '--bind', '127.0.0.1', '-d', ROOT],
+    srv = None if 'CLACKET_URL' in os.environ else subprocess.Popen([sys.executable, '-m', 'http.server', PORT, '--bind', '127.0.0.1', '-d', ROOT],
                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     time.sleep(1)
     try:
@@ -35,7 +37,7 @@ def main():
                 pg.on('pageerror', lambda e: logs.append('pageerror: ' + str(e)))
                 pg.on('requestfailed', lambda r: logs.append('requestfailed: ' + r.url))
                 pg.on('request', lambda r: logs.append('external request: ' + r.url) if not r.url.startswith(('http://127.0.0.1', 'blob:', 'data:')) else None)
-                pg.goto('http://127.0.0.1:' + PORT + '/'); pg.wait_for_timeout(500)
+                pg.goto(BASE + '/'); pg.wait_for_timeout(500)
                 pg.screenshot(path=os.path.join(OUT, name + '-1-page.png'), full_page=True)
                 pg.click('#next')
                 check(name + ': an empty title is refused', pg.is_visible('#e-title') and pg.is_visible('[data-step="1"]'))
@@ -74,7 +76,7 @@ def main():
                 ctx.close()
             b.close()
     finally:
-        srv.terminate()
+        if srv: srv.terminate()
     check('no browser errors, failed or external requests', not logs, json.dumps(logs, ensure_ascii=False))
     print('\n' + ('ALL PASSED' if not fails else str(len(fails)) + ' FAILED') + '. Screenshots: ' + OUT)
     sys.exit(1 if fails else 0)

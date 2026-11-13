@@ -31,6 +31,11 @@ Live at clacket.bassamailab.xyz.
 - pdf: pdf.js text items grouped into lines. Arabic often comes out damaged;
   the reader measures that and the page warns instead of passing it on quietly.
 
+## Releases
+See deploy/DEPLOY.md. Bump version.json, run `bash deploy/make-sums.sh`, push
+to main, push a tag vX.Y.Z. Never copy the nginx site file over the live one
+after certbot has edited it.
+
 ## Check before saying done
 Run `python3 tests/smoke.py <deck.pptx>` and look at the screenshots it writes,
 on both the phone and desktop sizes.
