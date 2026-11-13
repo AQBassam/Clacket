@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>كلاكيت: حوّل عرضك إلى عرض سينمائي</title>
+<meta name="description" content="كلاكيت يكتب لك مطالبة جاهزة تلصقها في وكيل برمجة، فيبني لك عرضًا تقديميًا سينمائيًا يعمل بجهاز التقليب. ملفك لا يغادر جهازك.">
+<meta name="theme-color" content="#f7f7f2">
+<meta property="og:title" content="كلاكيت: حوّل عرضك إلى عرض سينمائي">
+<meta property="og:description" content="أجب عن أسئلة قصيرة أو ارفع عرضك، وخذ مطالبة جاهزة لوكيل البرمجة.">
+<meta property="og:locale" content="ar_OM">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip" href="#maker">انتقل إلى المولّد</a>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#" aria-label="كلاكيت">
+      <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true"><use href="#clap"/></svg>
+      <span class="brand-name">كلاكيت</span>
+    </a>
+    <nav class="nav" aria-label="أقسام الصفحة">
+      <a href="#maker">المولّد</a>
+      <a href="#guide">الدليل</a>
+      <a href="https://bassamailab.xyz" rel="noopener">BassamAI Lab</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <p class="kicker">من BassamAI Lab</p>
+    <h1>عرضك القادم <span class="hl">فيلمٌ</span> لا شرائح</h1>
+    <p class="lead">أجب عن أسئلة قصيرة أو ارفع عرضك الحالي. كلاكيت يكتب لك مطالبة جاهزة تلصقها في وكيل برمجة، فيبني لك عرضًا سينمائيًا تقوده بجهاز التقليب.</p>
+    <ul class="facts">
+      <li><strong>الناتج صفحة ويب</strong> تعمل دون إنترنت، وليس ملف PowerPoint.</li>
+      <li><strong>تحتاج وكيل برمجة</strong> باشتراك مدفوع، مثل Claude. <a href="#guide">الدليل يشرح البداية</a>.</li>
+      <li><strong>ملفك لا يغادر جهازك.</strong> القراءة تتم داخل متصفحك.</li>
+    </ul>
+  </section>
+
+  <section id="maker" class="wrap maker" aria-labelledby="maker-h">
+    <h2 id="maker-h" class="sr">مولّد المطالبة</h2>
+    <div class="slate" aria-hidden="true"></div>
+
+    <ol class="steps" id="steps">
+      <li data-go="1" class="on"><span>1</span>العرض</li>
+      <li data-go="2"><span>2</span>المكان</li>
+      <li data-go="3"><span>3</span>المحتوى</li>
+      <li data-go="4"><span>4</span>المطالبة</li>
+    </ol>
+
+    <form id="form" novalidate>
+      <!-- 1 -->
+      <fieldset class="panel" data-step="1">
+        <legend>عن عرضك</legend>
+
+        <label class="field">
+          <span class="lab">عنوان العرض وموضوعه</span>
+          <input type="text" name="title" id="f-title" required autocomplete="off" placeholder="مثال: الذكاء الاصطناعي في تصميم البرامج التدريبية">
+          <span class="err" id="e-title" hidden>اكتب عنوان العرض لنكمل.</span>
+        </label>
+
+        <label class="field">
+          <span class="lab">من الجمهور وما المناسبة؟ <em>اختياري</em></span>
+          <input type="text" name="audience" autocomplete="off" placeholder="مثال: مشرفون تربويون، يوم تدريبي داخلي">
+        </label>
+
+        <div class="row">
+          <label class="field">
+            <span class="lab">مدة العرض بالدقائق <em>اختياري</em></span>
+            <input type="number" name="minutes" min="1" max="240" inputmode="numeric" placeholder="15">
+          </label>
+          <div class="field">
+            <span class="lab" id="l-lang">لغة الشرائح</span>
+            <div class="chips" role="radiogroup" aria-labelledby="l-lang">
+              <label><input type="radio" name="slideLang" value="Arabic" checked><span>عربية</span></label>
+              <label><input type="radio" name="slideLang" value="English"><span>إنجليزية</span></label>
+              <label><input type="radio" name="slideLang" value="both"><span>الاثنتان</span></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="lab" id="l-chat">بأي لغة يخاطبك الوكيل؟</span>
+          <div class="chips" role="radiogroup" aria-labelledby="l-chat">
+            <label><input type="radio" name="chatLang" value="Arabic" checked><span>العربية</span></label>
+            <label><input type="radio" name="chatLang" value="English"><span>الإنجليزية</span></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 2 -->
+      <fieldset class="panel" data-step="2" hidden>
+        <legend>أين ستقدّم وبأي أجهزة</legend>
+        <p class="hint">لا تعرف الإجابة؟ اختر «لا أعرف». الوكيل سيختار الأحوط.</p>
+
+        <div class="field">
+          <span class="lab" id="l-room">القاعة</span>
+          <div class="cards" role="radiogroup" aria-labelledby="l-room">
+            <label><input type="radio" name="room" value="bright classroom"><span><b>مضيئة</b><i>صف أو قاعة اجتماعات بإضاءة عادية</i></span></label>
+            <label><input type="radio" name="room" value="dark hall"><span><b>معتمة</b><i>مسرح أو قاعة تُطفأ أنوارها</i></span></label>
+            <label><input type="radio" name="room" value="unknown" checked><span><b>لا أعرف</b><i>سيُبنى العرض بمظهرين فاتح وداكن</i></span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="lab" id="l-pc">الحاسوب الذي ستعرض منه</span>
+          <div class="cards" role="radiogroup" aria-labelledby="l-pc">
+            <label><input type="radio" name="computer" value="my own Windows laptop" checked><span><b>حاسوبي، Windows</b></span></label>
+            <label><input type="radio" name="computer" value="my own Mac laptop"><span><b>حاسوبي، Mac</b></span></label>
+            <label><input type="radio" name="computer" value="the venue's computer, unknown"><span><b>حاسوب القاعة</b><i>لا أعرف مواصفاته</i></span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="lab" id="l-kb">لغة لوحة المفاتيح في ذلك الحاسوب</span>
+          <div class="chips" role="radiogroup" aria-labelledby="l-kb">
+            <label><input type="radio" name="keyboard" value="Arabic"><span>عربية</span></label>
+            <label><input type="radio" name="keyboard" value="English"><span>إنجليزية</span></label>
+            <label><input type="radio" name="keyboard" value="both" checked><span>الاثنتان</span></label>
+            <label><input type="radio" name="keyboard" value="unknown"><span>لا أعرف</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="lab" id="l-click">هل ستستخدم جهاز تقليب الشرائح (الريموت)؟</span>
+          <div class="chips" role="radiogroup" aria-labelledby="l-click">
+            <label><input type="radio" name="clicker" value="yes" checked><span>نعم</span></label>
+            <label><input type="radio" name="clicker" value="no"><span>لا، لوحة المفاتيح فقط</span></label>
+            <label><input type="radio" name="clicker" value="unknown"><span>لا أعرف</span></label>
+          </div>
+          <input type="text" name="clickerModel" id="f-clicker-model" autocomplete="off" placeholder="نوع الجهاز إن عرفته، مثل Logitech R400. اختياري" aria-label="نوع جهاز التقليب">
+        </div>
+
+        <div class="field">
+          <span class="lab" id="l-node">هل برنامج Node.js مثبّت على حاسوبك؟</span>
+          <p class="hint">برنامج مجاني يستعمله الوكيل لتصدير العرض إلى PDF وصور. إن لم تسمع به فاختر «لا أعرف».</p>
+          <div class="chips" role="radiogroup" aria-labelledby="l-node">
+            <label><input type="radio" name="node" value="yes"><span>نعم</span></label>
+            <label><input type="radio" name="node" value="no"><span>لا</span></label>
+            <label><input type="radio" name="node" value="unknown" checked><span>لا أعرف</span></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 3 -->
+      <fieldset class="panel" data-step="3" hidden>
+        <legend>محتوى العرض</legend>
+
+        <div class="field">
+          <span class="lab" id="l-src">من أين يأتي المحتوى؟</span>
+          <div class="cards" role="radiogroup" aria-labelledby="l-src">
+            <label><input type="radio" name="source" value="file" checked><span><b>لديّ عرض جاهز</b><i>ملف PowerPoint أو PDF</i></span></label>
+            <label><input type="radio" name="source" value="paste"><span><b>سأكتب النقاط</b><i>ألصق أو أكتب محاور العرض</i></span></label>
+            <label><input type="radio" name="source" value="none"><span><b>لاحقًا</b><i>يبني الوكيل الأدوات أولًا ثم أرسل الشرائح</i></span></label>
+          </div>
+        </div>
+
+        <div id="src-file" class="src">
+          <label class="drop" id="drop">
+            <input type="file" id="file" accept=".pptx,.pdf,application/pdf,application/vnd.openxmlformats-officedocument.presentationml.presentation">
+            <svg viewBox="0 0 48 48" aria-hidden="true"><use href="#clap"/></svg>
+            <b>اختر ملف العرض أو اسحبه إلى هنا</b>
+            <i>pptx أو pdf. يُقرأ داخل متصفحك ولا يُرفع إلى أي خادم.</i>
+          </label>
+          <p class="hint">ملف pptx يعطي نتيجة أدق من PDF. إن كان عرضك بصيغة ppt القديمة فاحفظه أولًا بصيغة pptx.</p>
+          <div id="file-status" class="status" role="status" aria-live="polite"></div>
+        </div>
+
+        <div id="src-paste" class="src" hidden>
+          <p class="hint">اكتب كل شريحة في سطر أو فقرة. لا يلزم تنسيق معيّن.</p>
+        </div>
+
+        <div id="outline-wrap" class="field" hidden>
+          <label class="lab" for="outline" id="outline-lab">محتوى الشرائح كما قرأناه. راجعه وعدّل ما تشاء.</label>
+          <textarea id="outline" name="outline" rows="14" dir="auto" spellcheck="false"></textarea>
+          <p class="hint" id="outline-hint"></p>
+        </div>
+
+        <div class="field" id="notes-field" hidden>
+          <label class="check"><input type="checkbox" name="draftNotes" checked><span>عرضي بلا ملاحظات متحدث. ليقترحها الوكيل من محتوى الشرائح فقط، وأراجعها قبل اعتمادها.</span></label>
+        </div>
+
+        <div class="field">
+          <span class="lab">ماذا ستعطي الوكيل أيضًا؟ <em>اختياري</em></span>
+          <div class="chips multi">
+            <label><input type="checkbox" name="sup" value="images"><span>صور</span></label>
+            <label><input type="checkbox" name="sup" value="data for charts"><span>بيانات أو جداول</span></label>
+            <label><input type="checkbox" name="sup" value="a written script"><span>نص مكتوب لما سأقوله</span></label>
+            <label><input type="checkbox" name="sup" value="a comic or storyboard"><span>قصة مصورة</span></label>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- 4 -->
+      <section class="panel" data-step="4" hidden aria-labelledby="out-h">
+        <h3 id="out-h" class="legend">مطالبتك جاهزة</h3>
+        <p class="hint" id="out-meta"></p>
+        <div class="actions">
+          <button type="button" class="btn primary" id="copy">انسخ المطالبة</button>
+          <button type="button" class="btn" id="download">نزّلها ملفًا نصيًا</button>
+        </div>
+        <p class="status" id="copy-status" role="status" aria-live="polite"></p>
+        <pre id="out" class="out" dir="ltr" lang="en" tabindex="0"></pre>
+
+        <div class="next">
+          <h4>ماذا بعد؟</h4>
+          <ol>
+            <li>أنشئ مجلدًا جديدًا فارغًا على حاسوبك<span id="next-file"></span>.</li>
+            <li>افتح وكيل البرمجة على ذلك المجلد والصق المطالبة.</li>
+            <li>سيعرض الوكيل خطة وثلاثة اتجاهات بصرية ثم يتوقف. اختر واحدًا ووافق.</li>
+          </ol>
+          <p>لم تستخدم وكيل برمجة من قبل؟ <a href="#guide">اقرأ الدليل</a>.</p>
+        </div>
+      </section>
+
+      <div class="navbtns">
+        <button type="button" class="btn ghost" id="back" hidden>السابق</button>
+        <button type="button" class="btn primary" id="next">التالي</button>
+      </div>
+    </form>
+  </section>
+
+  <section id="guide" class="wrap guide" aria-labelledby="guide-h">
+    <p class="kicker">الدليل</p>
+    <h2 id="guide-h">من المطالبة إلى العرض</h2>
+    <p class="lead">وكيل البرمجة برنامج ذكاء اصطناعي يعمل على حاسوبك: ينشئ الملفات ويشغّل الأوامر داخل مجلد تختاره. هذا الدليل يشرح البداية بتطبيق Claude لسطح المكتب، وهو الوكيل الذي اختُبرت عليه المطالبة.</p>
+
+    <div class="g-grid">
+      <article class="g-card">
+        <h3><span class="num">1</span>ما تحتاجه</h3>
+        <ul>
+          <li>اشتراك مدفوع في Claude: Pro أو Max أو Team أو Enterprise. الخطة المجانية لا تكفي.</li>
+          <li>حاسوب Windows أو Mac، ومتصفح Chrome أو Edge لتشغيل العرض.</li>
+          <li>على Windows فقط: برنامج <a href="https://git-scm.com/downloads/win" rel="noopener">Git for Windows</a>. ثبّته بالإعدادات الافتراضية قبل البدء.</li>
+        </ul>
+      </article>
+
+      <article class="g-card">
+        <h3><span class="num">2</span>ثبّت التطبيق</h3>
+        <ol>
+          <li>نزّل تطبيق Claude من <a href="https://claude.com/download" rel="noopener">claude.com/download</a> وثبّته.</li>
+          <li>افتحه وسجّل الدخول بحسابك.</li>
+          <li>اضغط تبويب <b dir="ltr">Code</b> في أعلى الوسط. إن طلب منك الترقية فاشتراكك لا يشمله.</li>
+        </ol>
+      </article>
+
+      <article class="g-card">
+        <h3><span class="num">3</span>جهّز المجلد</h3>
+        <ol>
+          <li>أنشئ مجلدًا جديدًا فارغًا، وسمّه بحروف إنجليزية مثل <b dir="ltr">my-talk</b>.</li>
+          <li>إن كان لديك عرض جاهز فانسخ ملفه إلى المجلد، ليأخذ الوكيل الصور منه.</li>
+          <li>في التطبيق اختر <b dir="ltr">Local</b> ثم <b dir="ltr">Select folder</b> وحدّد المجلد.</li>
+        </ol>
+      </article>
+
+      <article class="g-card">
+        <h3><span class="num">4</span>الصق المطالبة</h3>
+        <ol>
+          <li>الصق المطالبة كاملة في خانة الكتابة واضغط Enter.</li>
+          <li>سيطلب الوكيل إذنك عند إنشاء ملفات أو تشغيل أوامر. هذا متوقع، وكل عمله يبقى داخل مجلدك.</li>
+          <li>يشرح خطته باللغة التي اخترتها، ثم يتوقف وينتظرك.</li>
+        </ol>
+      </article>
+    </div>
+
+    <h3 class="g-sub">البوابات الأربع: متى يتوقف الوكيل وماذا تفعل</h3>
+    <p>الوكيل لا يبني كل شيء دفعة واحدة. يتوقف بعد كل مرحلة ويعطيك قائمة قصيرة تجرّبها، ولا يكمل حتى توافق. توقّفه ليس عطلًا.</p>
+    <div class="table-wrap">
+      <table class="gates">
+        <thead><tr><th>المرحلة</th><th>ما يبنيه</th><th>المطلوب منك</th></tr></thead>
+        <tbody>
+          <tr><td>الخطة</td><td>ثلاثة اتجاهات بصرية بألوانها وخطوطها، وتقسيم مقترح لشرائحك</td><td>اختر اتجاهًا وأجب عن أسئلته</td></tr>
+          <tr><td>المحرك</td><td>التنقل وأزرار التحكم وصفحة اختبار</td><td>جرّب جهاز التقليب، واضغط <span dir="ltr">D</span> لترى ماذا يرسل كل زر</td></tr>
+          <tr><td>الشكل</td><td>الخلفية المتحركة والألوان وأول شريحة حقيقية</td><td>احكم على المظهر، وافتح اختبار السرعة الذي يدلّك عليه</td></tr>
+          <tr><td>الأدوات</td><td>نافذة المقدّم، وملف PDF، ونسخة احتياطية تعمل على أي حاسوب</td><td>تمرّن بشاشتين إن أمكن، وافتح النسخة الاحتياطية</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>بعد البوابات ترسل شرائحك على دفعات. إن لم يعجبك شيء فأرسل لقطة شاشة وقل ما الخطأ فيها.</p>
+
+    <h3 class="g-sub">يوم العرض</h3>
+    <ul class="plain">
+      <li>افتح <b dir="ltr">index.html</b> بنقر مزدوج، ثم اضغط <span dir="ltr">F</span> لملء الشاشة و<span dir="ltr">H</span> لقائمة الأزرار.</li>
+      <li>للخروج من ملء الشاشة اضغط <span dir="ltr">F</span>، أو اضغط <span dir="ltr">Esc</span> مطوّلًا.</li>
+      <li>انسخ المجلد كاملًا إلى ذاكرة USB، ومعه النسخة الاحتياطية وملف PDF.</li>
+      <li>جرّب العرض على حاسوب القاعة قبل الموعد.</li>
+    </ul>
+
+    <details class="more">
+      <summary>أستخدم وكيلًا آخر أو سطر الأوامر</summary>
+      <p>المطالبة مكتوبة لأي وكيل برمجة ينشئ الملفات ويشغّل الأوامر على حاسوبك، مثل Codex و Kimi Code. اختُبرت على Claude Code فقط.</p>
+      <p>لتثبيت Claude Code في سطر الأوامر بدل التطبيق:</p>
+      <p class="cmd-lab">macOS</p>
+      <pre dir="ltr" class="cmd">curl -fsSL https://claude.ai/install.sh | bash</pre>
+      <p class="cmd-lab">Windows، في PowerShell</p>
+      <pre dir="ltr" class="cmd">irm https://claude.ai/install.ps1 | iex</pre>
+      <p>ثم افتح سطر الأوامر داخل مجلدك واكتب <b dir="ltr">claude</b>.</p>
+    </details>
+
+    <details class="more">
+      <summary>ما الذي لم يُختبر بعد؟</summary>
+      <ul class="plain">
+        <li>بُني بالمطالبة عرض عربي تجريبي واحد، وجُرّب على حاسوب Windows بلوحة مفاتيح عربية.</li>
+        <li>لم تُجرَّب بعد مع جهاز تقليب حقيقي ولا على شاشتين ولا على Mac.</li>
+        <li>خطوات التثبيت مأخوذة من وثائق Claude الرسمية بتاريخ 13 نوفمبر 2026، وقد تتغير. المرجع: <a href="https://code.claude.com/docs/en/desktop-quickstart" rel="noopener">دليل البدء الرسمي</a>.</li>
+      </ul>
+    </details>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p>كلاكيت، من <a href="https://bassamailab.xyz" rel="noopener">BassamAI Lab</a>. صُنع بفضول.</p>
+    <p class="ver">نسخة المطالبة <span id="ver"></span> · <a href="https://github.com/AQBassam/Clacket" rel="noopener">المصدر على GitHub</a></p>
+  </div>
+</footer>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="clap" viewBox="0 0 48 48">
+    <path d="M6 20h36v19a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3z" fill="currentColor"/>
+    <path d="M5.2 13.6 39.6 5.2a2 2 0 0 1 2.4 1.5l1 4.1L6.7 19.7l-2.9-3.7a1.5 1.5 0 0 1 1.4-2.4z" fill="currentColor" opacity=".55"/>
+    <path d="m13 11.700 5 6.200M22.500 9.400l5 6.200M32 7.100l5 6.200" stroke="#f7f7f2" stroke-width="2.6" fill="none"/>
+  </symbol>
+</svg>
+
+<script src="vendor/fflate.js"></script>
+<script src="js/brief.js"></script>
+<script src="js/readers.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
