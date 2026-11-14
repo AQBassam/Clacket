@@ -101,7 +101,9 @@ input.bad { border-color: var(--danger); }
 .btn.primary { background: var(--teal); border-color: var(--teal); color: var(--white); }
 .btn.primary:hover { background: var(--teal-dark); border-color: var(--teal-dark); }
 .btn.ghost { border-color: var(--line); }
-.navbtns { display: flex; justify-content: space-between; gap: 10px; margin-top: 10px; flex-direction: row-reverse; }
+/* Right to left: Back sits on the right (where the reader came from), Next on the left, on every step. */
+.navbtns { display: flex; gap: 10px; margin-top: 10px; }
+.navbtns #next { margin-inline-start: auto; }
 .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
 .out { background: #10302e; color: #e9f1ec; border-radius: var(--r-sm); padding: 16px; margin: 0 0 22px; max-height: 420px; overflow: auto; white-space: pre-wrap; word-break: break-word; font: 13.500px/1.650 ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace; text-align: left; unicode-bidi: plaintext; }
 .next { background: var(--paper); border-radius: var(--r-sm); padding: 16px 20px; }
