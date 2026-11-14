@@ -29,13 +29,15 @@ GitHub يصنع أرشيف الوسم تلقائيًا، فلا حاجة إلى 
 ## التثبيت على الخادم
 
 ```bash
-V=1.1.1
+V=1.2.0
 cd /root
 curl -fL -o clacket-$V.tar.gz https://github.com/AQBassam/Clacket/archive/refs/tags/v$V.tar.gz
 tar -xzf clacket-$V.tar.gz && cd Clacket-$V
 bash deploy/install.sh          # تحقق الملفات، ثم تبديل current، ثم nginx -t وإعادة التحميل
-bash deploy/verify.sh           # المتوقع: 22 ناجح بعد HTTPS
+bash deploy/verify.sh           # المتوقع: 21 ناجح بعد HTTPS
 ```
+
+`install.sh` لا ينشئ ملف الموقع في nginx. إن لم يكن موجودًا في `/etc/nginx/sites-enabled/` فنفّذ «الإعداد لأول مرة» أدناه أولًا، وإلا ردّ الخادم بشهادة موقع آخر وفشل الفحص كله.
 
 `install.sh` يتحقق من كل ملف ببصمته في `deploy/SHA256SUMS` قبل النسخ، وينسخ ترويسات الأمان إلى `/etc/nginx/snippets/` إن تغيّرت، ويعيد القديمة إن رفض `nginx -t` الإعداد.
 
@@ -51,7 +53,7 @@ ln -s /etc/nginx/sites-available/clacket.bassamailab.xyz /etc/nginx/sites-enable
 bash deploy/install.sh
 bash deploy/verify.sh http://127.0.0.1 clacket.bassamailab.xyz   # المتوقع: 19 ناجح
 certbot --nginx -d clacket.bassamailab.xyz --redirect
-bash deploy/verify.sh                                              # المتوقع: 22 ناجح
+bash deploy/verify.sh                                              # المتوقع: 21 ناجح
 ```
 
 - **بعد certbot لا يُنسخ ملف الموقع من جديد.** certbot كتب أسطر الشهادة في الملف الحي، والنسخ فوقه يمحوها.
@@ -61,3 +63,5 @@ bash deploy/verify.sh                                              # المتو�
 ## ما اختُبر
 
 البروفة الكاملة للإعداد لأول مرة (دون certbot) أُجريت على nginx 1.24 محليًا: `install.sh` ثم `verify.sh` بنتيجة 19 ناجح، ثم الاختبار الآلي للصفحة عبر nginx وسياسة الأمان مفعّلة، بلا أخطاء. قراءة PDF تعمل تحت سياسة الأمان.
+
+النشر الحقيقي الأول كان للإصدار 1.2.0 في 14 نوفمبر 2026: الإعداد لأول مرة على الخادم، ثم certbot، ثم `verify.sh` بنتيجة 21 ناجح من 21 (الفحوص الـ19 وفحصا HTTPS).
