@@ -1,5 +1,7 @@
 # Task: make the whole Clacket page a film, with pictures
 
+Status: built in 1.2.0 (14 Nov 2026). See AGENTS.md "The film" and docs/TESTING.md.
+
 Read AGENTS.md first. This file is the handoff for the next piece of work,
 written at the end of the session that built versions 1.0.0 to 1.1.1.
 

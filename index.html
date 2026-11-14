@@ -29,76 +29,154 @@
   </div>
 </header>
 
-<main>
-  <section class="theatre" aria-labelledby="show-h">
-    <div class="theatre-in">
-      <div class="arm" aria-hidden="true"></div>
-      <div id="stage" class="stage" tabindex="0" role="group" aria-roledescription="عرض تقديمي" aria-label="عرض حيّ مصغّر. اضغط السهم الأيمن للتالي والأيسر للسابق.">
-        <canvas class="cloud" aria-hidden="true"></canvas>
+<div class="bg" aria-hidden="true">
+  <img class="pic" data-pic="hall" src="assets/img/hall-960.webp" srcset="assets/img/hall-960.webp 960w, assets/img/hall-1600.webp 1600w" sizes="100vw" alt="" decoding="async">
+  <img class="pic" data-pic="stage" alt="" decoding="async">
+  <img class="pic" data-pic="stage-dim" alt="" decoding="async">
+  <img class="pic" data-pic="dust" alt="" decoding="async">
+  <img class="pic" data-pic="clicker" alt="" decoding="async">
+  <img class="pic" data-pic="seats" alt="" decoding="async">
+  <img class="pic" data-pic="desk" alt="" decoding="async">
+  <img class="pic" data-pic="lens" alt="" decoding="async">
+  <img class="pic" data-pic="slate" alt="" decoding="async">
+  <img class="pic" data-pic="keys" alt="" decoding="async">
+  <img class="pic" data-pic="house" alt="" decoding="async">
+  <canvas class="cloud"></canvas>
+  <div class="scrim"></div>
+</div>
 
-        <div class="scene" data-say="عرضك القادم فيلم، لا شرائح.">
-          <h1 id="show-h" data-in="start-title" data-words>عرضك القادم فيلم، لا شرائح</h1>
-          <p class="line" data-in="start-line" data-words>كلاكيت يكتب المطالبة، ووكيل البرمجة يبني العرض.</p>
-          <p class="cue" data-in="start-hint">اضغط هنا لتبدأ العرض</p>
-        </div>
+<main id="film">
+  <section id="stage" class="reel" role="group" aria-roledescription="عرض تقديمي" aria-label="عرض حيّ. المسافة أو PageDown للتالي، و PageUp للسابق، أو مرّر الصفحة.">
+    <div class="scene" data-say="عرضك القادم فيلم، لا شرائح.">
+      <h1 id="show-h" data-in="start-title" data-words>عرضك القادم فيلم، لا شرائح</h1>
+      <p class="line" data-in="start-line" data-words>كلاكيت يكتب المطالبة، ووكيل البرمجة يبني العرض.</p>
+      <p class="cue" data-in="start-hint">اضغط هنا لتبدأ العرض</p>
+    </div>
 
-        <div class="scene" data-say="في كل نقرة فكرة واحدة. وما ستقوله يبقى في ملاحظاتك، لا على الشاشة.">
-          <p class="kick" data-in="idea-kicker">قاعدة العرض</p>
-          <p class="head" data-in="idea-title" data-words>في كل نقرة <em>فكرة واحدة</em></p>
-          <p class="line" data-in="idea-notes" data-words>وما ستقوله يبقى في ملاحظاتك، لا على الشاشة.</p>
-        </div>
+    <div class="scene" data-say="في كل نقرة فكرة واحدة. وما ستقوله يبقى في ملاحظاتك، لا على الشاشة.">
+      <p class="kick" data-in="idea-kicker">قاعدة العرض</p>
+      <p class="head" data-in="idea-title" data-words>في كل نقرة <em>فكرة واحدة</em></p>
+      <p class="line" data-in="idea-notes" data-words>وما ستقوله يبقى في ملاحظاتك، لا على الشاشة.</p>
+    </div>
 
-        <div class="scene" data-say="4 بوابات يتوقف عندها الوكيل لتجرّب بنفسك قبل أن يكمل.">
-          <p class="bignum" data-in="gates-num"><span class="count">0</span></p>
-          <p class="line big" data-in="gates-label" data-words>بوابات يتوقف عندها الوكيل لتجرّب بنفسك قبل أن يكمل</p>
-        </div>
+    <div class="scene" data-say="4 بوابات يتوقف عندها الوكيل لتجرّب بنفسك قبل أن يكمل.">
+      <p class="bignum" data-in="gates-num"><span class="count">0</span></p>
+      <p class="line big" data-in="gates-label" data-words>بوابات يتوقف عندها الوكيل لتجرّب بنفسك قبل أن يكمل</p>
+    </div>
 
-        <div class="scene" data-say="خلفية حيّة تتشكّل بحسب موضوعك، ولا تنقطع بين صفحة وأخرى.">
-          <p class="head" data-in="live-title" data-words>خلفية حيّة تتشكّل بحسب موضوعك</p>
-          <p class="line" data-in="live-line" data-words>ولا تنقطع بين صفحة وأخرى.</p>
-        </div>
+    <div class="scene" data-say="خلفية حيّة تتشكّل بحسب موضوعك، ولا تنقطع بين صفحة وأخرى.">
+      <p class="head" data-in="live-title" data-words>خلفية حيّة تتشكّل بحسب موضوعك</p>
+      <p class="line" data-in="live-line" data-words>ولا تنقطع بين صفحة وأخرى.</p>
+    </div>
 
-        <div class="scene" data-say="وأنت من يقود: السهم الأيمن للتالي، الأيسر للسابق، B للشاشة السوداء، F لملء الشاشة.">
-          <p class="head" data-in="drive-title" data-words>وأنت من يقود</p>
-          <ul class="keys" data-in="drive-keys" data-words>
-            <li><kbd dir="ltr">→</kbd> التالي</li>
-            <li><kbd dir="ltr">←</kbd> السابق</li>
-            <li><kbd dir="ltr">B</kbd> شاشة سوداء</li>
-            <li><kbd dir="ltr">F</kbd> ملء الشاشة</li>
-          </ul>
-        </div>
+    <div class="scene" data-say="وأنت من يقود: PageDown للتالي، PageUp للسابق، B للشاشة السوداء، F لملء الشاشة.">
+      <p class="head" data-in="drive-title" data-words>وأنت من يقود</p>
+      <ul class="keys" data-in="drive-keys" data-words>
+        <li><kbd dir="ltr">PageDown</kbd> التالي</li>
+        <li><kbd dir="ltr">PageUp</kbd> السابق</li>
+        <li><kbd dir="ltr">B</kbd> شاشة سوداء</li>
+        <li><kbd dir="ltr">F</kbd> ملء الشاشة</li>
+      </ul>
+    </div>
 
-        <div class="scene" data-say="الآن دور عرضك. أجب عن أسئلة قصيرة في الأسفل، وخذ مطالبتك.">
-          <p class="head" data-in="yours-title" data-words>الآن دور عرضك</p>
-          <p class="line" data-in="yours-line" data-words>أجب عن أسئلة قصيرة في الأسفل، وخذ مطالبتك.</p>
-        </div>
-
-        <div class="pageno" aria-hidden="true"><b></b><i></i></div>
-        <div class="progress" aria-hidden="true"><i></i></div>
-        <div class="cover" aria-hidden="true"></div>
-      </div>
-
-      <div class="deck-bar">
-        <p class="deck-note">هذا عرض حيّ مصغّر، مبنيّ بقواعد المطالبة نفسها. انقر عليه ثم قُده بالأسهم، أو باللمس.</p>
-        <div class="deck-btns">
-          <button type="button" class="dbtn" id="show-prev">السابق</button>
-          <button type="button" class="dbtn main" id="show-next">التالي</button>
-          <button type="button" class="dbtn" id="show-full">ملء الشاشة</button>
-        </div>
-      </div>
-      <p id="stage-live" class="sr" aria-live="polite"></p>
+    <div class="scene" data-say="الآن دور عرضك. أجب عن أسئلة قصيرة في الأسفل، وخذ مطالبتك.">
+      <p class="head" data-in="yours-title" data-words>الآن دور عرضك</p>
+      <p class="line" data-in="yours-line" data-words>أجب عن أسئلة قصيرة في الأسفل، وخذ مطالبتك.</p>
     </div>
   </section>
 
-  <section class="wrap intro">
-    <p class="lead">أجب عن أسئلة قصيرة أو ارفع عرضك الحالي. كلاكيت يكتب لك مطالبة جاهزة تلصقها في وكيل برمجة، فيبني لك عرضًا كاملًا بهذه الطريقة، ومعه نافذة للمقدّم وملف PDF ونسخة احتياطية.</p>
-    <ul class="facts">
-      <li><strong>الناتج صفحة ويب</strong> تعمل دون إنترنت، وليس ملف PowerPoint.</li>
-      <li><strong>تحتاج وكيل برمجة</strong> باشتراك مدفوع، مثل Claude. <a href="#guide">الدليل يشرح البداية</a>.</li>
-      <li><strong>ملفك لا يغادر جهازك.</strong> القراءة تتم داخل متصفحك.</li>
-    </ul>
+  <section id="take-what" class="take" data-pic="seats" data-cam="1.04,-1" aria-labelledby="what-h">
+    <div class="take-in">
+      <h2 id="what-h" class="take-h" data-click="0" data-words>عرض كامل، ومعه أدواته</h2>
+      <p class="take-p" data-click="0">أجب عن أسئلة قصيرة أو ارفع عرضك الحالي. كلاكيت يكتب لك مطالبة جاهزة تلصقها في وكيل برمجة، فيبني لك عرضًا كاملًا بهذه الطريقة، ومعه نافذة للمقدّم وملف PDF ونسخة احتياطية.</p>
+      <ul class="take-list">
+        <li data-click="1"><strong>الناتج صفحة ويب</strong> تعمل دون إنترنت، وليس ملف PowerPoint.</li>
+        <li data-click="2"><strong>تحتاج وكيل برمجة</strong> باشتراك مدفوع، مثل Claude. <a href="#guide">الدليل يشرح البداية</a>.</li>
+        <li data-click="3"><strong>ملفك لا يغادر جهازك.</strong> القراءة تتم داخل متصفحك.</li>
+      </ul>
+    </div>
   </section>
 
+  <div id="guide" class="guide" aria-labelledby="guide-h">
+  <section id="take-guide" class="take" data-pic="desk" data-cam="1.08,1.5">
+    <div class="take-in">
+      <h2 id="guide-h" class="take-h" data-click="0" data-words>من المطالبة إلى العرض</h2>
+      <p class="take-p" data-click="1">وكيل البرمجة برنامج ذكاء اصطناعي يعمل على حاسوبك: ينشئ الملفات ويشغّل الأوامر داخل مجلد تختاره. هذا الدليل يشرح البداية بتطبيق Claude لسطح المكتب، وهو الوكيل الذي اختُبرت عليه المطالبة.</p>
+    </div>
+  </section>
+
+  <section id="take-need" class="take" data-pic="desk" data-cam="1.04,-1" aria-labelledby="need-h">
+    <div class="take-in">
+      <h3 id="need-h" class="take-h" data-click="0" data-words>ما تحتاجه</h3>
+      <ul class="take-list">
+        <li data-click="1">اشتراك مدفوع في Claude: Pro أو Max أو Team أو Enterprise. الخطة المجانية لا تكفي.</li>
+        <li data-click="2">حاسوب Windows أو Mac، ومتصفح Chrome أو Edge لتشغيل العرض.</li>
+        <li data-click="3">على Windows فقط: برنامج <a href="https://git-scm.com/downloads/win" rel="noopener">Git for Windows</a>. ثبّته بالإعدادات الافتراضية قبل البدء.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="take-install" class="take" data-pic="lens" data-cam="1.06,1" aria-labelledby="install-h">
+    <div class="take-in">
+      <h3 id="install-h" class="take-h" data-click="0" data-words>ثبّت التطبيق</h3>
+      <ol class="take-list steps-n">
+        <li data-click="1">نزّل تطبيق Claude من <a href="https://claude.com/download" rel="noopener">claude.com/download</a> وثبّته.</li>
+        <li data-click="2">افتحه وسجّل الدخول بحسابك.</li>
+        <li data-click="3">اضغط تبويب <b dir="ltr">Code</b> في أعلى الوسط. إن طلب منك الترقية فاشتراكك لا يشمله.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="take-folder" class="take" data-pic="slate" data-cam="1.06,-1.5" aria-labelledby="folder-h">
+    <div class="take-in">
+      <h3 id="folder-h" class="take-h" data-click="0" data-words>جهّز المجلد</h3>
+      <ol class="take-list steps-n">
+        <li data-click="1">أنشئ مجلدًا جديدًا فارغًا، وسمّه بحروف إنجليزية مثل <b dir="ltr">my-talk</b>.</li>
+        <li data-click="2">إن كان لديك عرض جاهز فانسخ ملفه إلى المجلد، ليأخذ الوكيل الصور منه.</li>
+        <li data-click="3">في التطبيق اختر <b dir="ltr">Local</b> ثم <b dir="ltr">Select folder</b> وحدّد المجلد.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="take-paste" class="take" data-pic="keys" data-cam="1.06,1.5" aria-labelledby="paste-h">
+    <div class="take-in">
+      <h3 id="paste-h" class="take-h" data-click="0" data-words>الصق المطالبة</h3>
+      <ol class="take-list steps-n">
+        <li data-click="1">الصق المطالبة كاملة في خانة الكتابة واضغط Enter.</li>
+        <li data-click="2">سيطلب الوكيل إذنك عند إنشاء ملفات أو تشغيل أوامر. هذا متوقع، وكل عمله يبقى داخل مجلدك.</li>
+        <li data-click="3">يشرح خطته باللغة التي اخترتها، ثم يتوقف وينتظرك.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="take-gates" class="take" data-pic="stage-dim" data-cam="1.1,-1" data-dots="gates" aria-labelledby="gates-h">
+    <div class="take-in">
+      <h3 id="gates-h" class="take-h" data-click="0" data-words>البوابات الأربع</h3>
+      <p class="take-p" data-click="0">الوكيل لا يبني كل شيء دفعة واحدة. يتوقف بعد كل مرحلة ويعطيك قائمة قصيرة تجرّبها، ولا يكمل حتى توافق. توقّفه ليس عطلًا.</p>
+      <ol class="take-list gate-list">
+        <li data-click="1" data-lit="1"><b>الخطة</b><span><i>يبني:</i> ثلاثة اتجاهات بصرية بألوانها وخطوطها، وتقسيمًا مقترحًا لشرائحك.</span><span><i>عليك:</i> اختر اتجاهًا وأجب عن أسئلته.</span></li>
+        <li data-click="2" data-lit="2"><b>المحرك</b><span><i>يبني:</i> التنقل وأزرار التحكم وصفحة اختبار.</span><span><i>عليك:</i> جرّب جهاز التقليب، واضغط <span dir="ltr">D</span> لترى ماذا يرسل كل زر.</span></li>
+        <li data-click="3" data-lit="3"><b>الشكل</b><span><i>يبني:</i> الخلفية المتحركة والألوان وأول شريحة حقيقية.</span><span><i>عليك:</i> احكم على المظهر، وافتح اختبار السرعة الذي يدلّك عليه.</span></li>
+        <li data-click="4" data-lit="4"><b>الأدوات</b><span><i>يبني:</i> نافذة المقدّم، وملف PDF، ونسخة احتياطية تعمل على أي حاسوب.</span><span><i>عليك:</i> تمرّن بشاشتين إن أمكن، وافتح النسخة الاحتياطية.</span></li>
+      </ol>
+      <p class="take-p" data-click="5">بعد البوابات ترسل شرائحك على دفعات. إن لم يعجبك شيء فأرسل لقطة شاشة وقل ما الخطأ فيها.</p>
+    </div>
+  </section>
+
+  <section id="take-day" class="take" data-pic="house" data-cam="1.05,1" data-then="maker" aria-labelledby="day-h">
+    <div class="take-in">
+      <h3 id="day-h" class="take-h" data-click="0" data-words>يوم العرض</h3>
+      <ul class="take-list">
+        <li data-click="1">افتح <b dir="ltr">index.html</b> بنقر مزدوج، ثم اضغط <span dir="ltr">F</span> لملء الشاشة و<span dir="ltr">H</span> لقائمة الأزرار.</li>
+        <li data-click="2">للخروج من ملء الشاشة اضغط <span dir="ltr">F</span>، أو اضغط <span dir="ltr">Esc</span> مطوّلًا.</li>
+        <li data-click="3">انسخ المجلد كاملًا إلى ذاكرة USB، ومعه النسخة الاحتياطية وملف PDF.</li>
+        <li data-click="4">جرّب العرض على حاسوب القاعة قبل الموعد.</li>
+      </ul>
+    </div>
+  </section>
+  </div>
+
+  <div class="booth" data-quiet>
   <section id="maker" class="wrap maker" aria-labelledby="maker-h">
     <h2 id="maker-h" class="sr">مولّد المطالبة</h2>
     <ol class="steps" id="steps">
@@ -279,72 +357,9 @@
       </div>
     </form>
   </section>
+  </div>
 
-  <section id="guide" class="wrap guide" aria-labelledby="guide-h">
-    <h2 id="guide-h">من المطالبة إلى العرض</h2>
-    <p class="lead">وكيل البرمجة برنامج ذكاء اصطناعي يعمل على حاسوبك: ينشئ الملفات ويشغّل الأوامر داخل مجلد تختاره. هذا الدليل يشرح البداية بتطبيق Claude لسطح المكتب، وهو الوكيل الذي اختُبرت عليه المطالبة.</p>
-
-    <div class="g-grid">
-      <article class="g-card">
-        <h3><span class="num">1</span>ما تحتاجه</h3>
-        <ul>
-          <li>اشتراك مدفوع في Claude: Pro أو Max أو Team أو Enterprise. الخطة المجانية لا تكفي.</li>
-          <li>حاسوب Windows أو Mac، ومتصفح Chrome أو Edge لتشغيل العرض.</li>
-          <li>على Windows فقط: برنامج <a href="https://git-scm.com/downloads/win" rel="noopener">Git for Windows</a>. ثبّته بالإعدادات الافتراضية قبل البدء.</li>
-        </ul>
-      </article>
-
-      <article class="g-card">
-        <h3><span class="num">2</span>ثبّت التطبيق</h3>
-        <ol>
-          <li>نزّل تطبيق Claude من <a href="https://claude.com/download" rel="noopener">claude.com/download</a> وثبّته.</li>
-          <li>افتحه وسجّل الدخول بحسابك.</li>
-          <li>اضغط تبويب <b dir="ltr">Code</b> في أعلى الوسط. إن طلب منك الترقية فاشتراكك لا يشمله.</li>
-        </ol>
-      </article>
-
-      <article class="g-card">
-        <h3><span class="num">3</span>جهّز المجلد</h3>
-        <ol>
-          <li>أنشئ مجلدًا جديدًا فارغًا، وسمّه بحروف إنجليزية مثل <b dir="ltr">my-talk</b>.</li>
-          <li>إن كان لديك عرض جاهز فانسخ ملفه إلى المجلد، ليأخذ الوكيل الصور منه.</li>
-          <li>في التطبيق اختر <b dir="ltr">Local</b> ثم <b dir="ltr">Select folder</b> وحدّد المجلد.</li>
-        </ol>
-      </article>
-
-      <article class="g-card">
-        <h3><span class="num">4</span>الصق المطالبة</h3>
-        <ol>
-          <li>الصق المطالبة كاملة في خانة الكتابة واضغط Enter.</li>
-          <li>سيطلب الوكيل إذنك عند إنشاء ملفات أو تشغيل أوامر. هذا متوقع، وكل عمله يبقى داخل مجلدك.</li>
-          <li>يشرح خطته باللغة التي اخترتها، ثم يتوقف وينتظرك.</li>
-        </ol>
-      </article>
-    </div>
-
-    <h3 class="g-sub">البوابات الأربع: متى يتوقف الوكيل وماذا تفعل</h3>
-    <p>الوكيل لا يبني كل شيء دفعة واحدة. يتوقف بعد كل مرحلة ويعطيك قائمة قصيرة تجرّبها، ولا يكمل حتى توافق. توقّفه ليس عطلًا.</p>
-    <div class="table-wrap">
-      <table class="gates">
-        <thead><tr><th>المرحلة</th><th>ما يبنيه</th><th>المطلوب منك</th></tr></thead>
-        <tbody>
-          <tr><td>الخطة</td><td>ثلاثة اتجاهات بصرية بألوانها وخطوطها، وتقسيم مقترح لشرائحك</td><td>اختر اتجاهًا وأجب عن أسئلته</td></tr>
-          <tr><td>المحرك</td><td>التنقل وأزرار التحكم وصفحة اختبار</td><td>جرّب جهاز التقليب، واضغط <span dir="ltr">D</span> لترى ماذا يرسل كل زر</td></tr>
-          <tr><td>الشكل</td><td>الخلفية المتحركة والألوان وأول شريحة حقيقية</td><td>احكم على المظهر، وافتح اختبار السرعة الذي يدلّك عليه</td></tr>
-          <tr><td>الأدوات</td><td>نافذة المقدّم، وملف PDF، ونسخة احتياطية تعمل على أي حاسوب</td><td>تمرّن بشاشتين إن أمكن، وافتح النسخة الاحتياطية</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p>بعد البوابات ترسل شرائحك على دفعات. إن لم يعجبك شيء فأرسل لقطة شاشة وقل ما الخطأ فيها.</p>
-
-    <h3 class="g-sub">يوم العرض</h3>
-    <ul class="plain">
-      <li>افتح <b dir="ltr">index.html</b> بنقر مزدوج، ثم اضغط <span dir="ltr">F</span> لملء الشاشة و<span dir="ltr">H</span> لقائمة الأزرار.</li>
-      <li>للخروج من ملء الشاشة اضغط <span dir="ltr">F</span>، أو اضغط <span dir="ltr">Esc</span> مطوّلًا.</li>
-      <li>انسخ المجلد كاملًا إلى ذاكرة USB، ومعه النسخة الاحتياطية وملف PDF.</li>
-      <li>جرّب العرض على حاسوب القاعة قبل الموعد.</li>
-    </ul>
-
+  <section class="notes wrap" data-quiet aria-label="ملاحظات">
     <details class="more">
       <summary>أستخدم وكيلًا آخر أو سطر الأوامر</summary>
       <p>المطالبة مكتوبة لأي وكيل برمجة ينشئ الملفات ويشغّل الأوامر على حاسوبك، مثل Codex و Kimi Code. اختُبرت على Claude Code فقط.</p>
@@ -366,6 +381,18 @@
     </details>
   </section>
 </main>
+
+<div class="hud" aria-hidden="true">
+  <div class="pageno"><b></b><i></i></div>
+  <div class="progress"><i></i></div>
+</div>
+<div class="deck-btns" role="group" aria-label="التحكم في العرض">
+  <button type="button" class="dbtn" id="show-prev">السابق</button>
+  <button type="button" class="dbtn main" id="show-next">التالي</button>
+  <button type="button" class="dbtn" id="show-full">ملء الشاشة</button>
+</div>
+<div class="cover" aria-hidden="true"></div>
+<p id="stage-live" class="sr" aria-live="polite"></p>
 
 <footer class="foot">
   <div class="wrap foot-in">

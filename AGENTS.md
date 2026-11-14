@@ -22,15 +22,29 @@ Live at clacket.bassamailab.xyz.
   before editing, and update the date shown in the guide.
 - Do not commit real presentations. Tests take a file path.
 
-## The live show (js/show.js)
-The hero is a miniature show the visitor drives. It is the page's one loud
-element; keep everything else quiet. It must obey the brief it advertises: one
-paused master timeline, only .to() and .set(), the point cloud drawn from the
-state object S, Arabic split by whole words, Back in reverse at twice the
-speed, letter keys matched by physical key. Every claim on its slides must be
-true of the brief. tests/smoke.py checks click-through, Back and jump give the
-same picture on every beat. Class names inside the stage must not collide with
-page classes (a `.num` collision once broke the counter).
+## The film (js/show.js)
+The whole page is one film in a dark hall. One fixed layer (`.bg`) holds the
+pictures and the point cloud; the sections scroll over it. The show at the top
+(`#stage`) and every guide section (`.take`) are scenes on ONE paused master
+timeline. Scrolling down to a scene plays all its clicks; arrows, PageUp/Down
+and a clicker step through them one by one and move on at a scene's end.
+The generator (`#maker`, inside `.booth`) comes last, after the guide, so the
+visitor has seen the whole path before filling it in. It is not a scene: it stays a plain form,
+nothing in it animates, and keys never drive the film while focus is there.
+The film must obey the brief it advertises: only .to() and .set(), the point
+cloud drawn from the state object S, Arabic split by whole words, Back in
+reverse at twice the speed, letter keys matched by physical key, arrow keys
+keep the brief's meaning (Right = next; the slide names PageDown/PageUp, never
+an arrow picture, since an arrow pointing right reads as "back" to this audience), each click
+placed at or after the previous beat (never '>' across clicks), relative
+offsets multiplied by D. Every claim on a slide must be true of the brief.
+Guide text animates opacity only, never visibility, so screen readers keep it.
+Class names inside the film must not collide with page classes (a `.num`
+collision once broke the counter).
+
+Pictures: generated, recorded in docs/CREDITS.md. Originals in art/originals/
+(not deployed); `python tools/treat-images.py` prints them in the hall's inks
+into assets/img/. Guide pictures load only when their scene is near.
 
 ## How the reader works (js/readers.js)
 - pptx: unzip with fflate, order slides by presentation.xml, join the runs of
@@ -48,4 +62,8 @@ after certbot has edited it.
 
 ## Check before saying done
 Run `python3 tests/smoke.py <deck.pptx>` and look at the screenshots it writes,
-on both the phone and desktop sizes.
+on both the phone and desktop sizes. It serves the site with the live CSP
+(tests/serve.py) and checks every beat: same picture by click-through, Back and
+jump; nothing from a later click early; text at least 7:1 against what lies
+behind it; no text under the buttons. `python tests/serve.py` serves the same
+way for a manual look.
